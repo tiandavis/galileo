@@ -1,0 +1,241 @@
+<!--
+    -\-                                                     
+    \-- \-                                                  
+     \  - -\                                                
+      \      \\                                             
+       \       \                                            
+        \       \\                                              
+         \        \\                                            
+         \          \\                                        
+         \           \\\                                      
+          \            \\                                                 
+           \            \\                                              
+           \. .          \\                                  
+            \    .       \\                                 
+             \      .    \\                                            
+              \       .  \\                                 
+              \         . \\                                           
+              \            <=)                                         
+              \            <==)                                         
+              \            <=)                                           
+               \           .\\                                           _-
+               \         .   \\                                        _-//
+               \       .     \\                                     _-_/ /
+               \ . . .        \\                                 _--_/ _/
+                \              \\                              _- _/ _/
+                \               \\                      ___-(O) _/ _/ 
+                \                \                  __--  __   /_ /      ***********************************
+                \                 \\          ____--__----  /    \_       I AM A MOTHERFUCKING PTERODACTYL!
+                 \                  \\       -------       /   \_  \_     HERE TO PTERO-YOU A NEW ASSHOLE
+                  \                   \                  //   // \__ \_   HTTP://PTERODACTYL.ME
+                   \                   \\              //   //      \_ \_ **********************************
+                    \                   \\          ///   //          \__- 
+                    \                -   \\/////////    //            
+                    \            -         \_         //              
+                    /        -                      //                
+                   /     -                       ///                  
+                  /   -                       //                      
+             __--/                         ///
+  __________/                            // |               
+//-_________      ___                ////  |                
+        ____\__--/                /////    |                
+   -----______    -/---________////        |                
+     _______/  --/    \                   |                 
+   /_________-/       \                   |                 
+  //                  \                   /                 
+                       \.                 /                 
+                       \     .            /                 
+                        \       .        /                  
+                       \\           .    /                  
+                        \                /                  
+                        \              __|                  
+                        \              ==/                  
+                        /              //                   
+                        /          .  //                    
+                        /   .  .    //                      
+                       /.           /                       
+                      /            //                       
+                      /           /
+                     /          //
+                    /         //
+                 --/         /
+                /          //
+            ////         //
+         ///_________////
+
+
+-->
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Galileo</title>
+<meta name="author" content="TechOctave, LLC"/>
+<meta name="description" content="Galileo is a smarter way to manage Twitter relationships and grow an audience."/>
+<!--<link rel="stylesheet" href="stylesheets/reset.css"/>
+<link rel="stylesheet" href="stylesheets/buttons.css"/>
+<link rel="stylesheet" href="stylesheets/jnotify.css"/>
+<link rel="stylesheet" href="stylesheets/application.css"/>-->
+<link rel="stylesheet" href="stylesheets/galileo.css"/>
+</head><body id="galileo">
+
+<div id="header">
+	<div id="panel-top">
+		
+		<div class="panel-content">
+			<div id="session">
+				<script id="AuthTmpl" type="text/template">
+					<span>Logged as <a href="http://twitter.com/<%= screen_name %>" title="Admin" target="_blank">@<%= screen_name %></a> (<em id="logout" data-id="<%= id %>" data-screen-name="<%= screen_name %>">logout</em>)</span>
+				</script>
+			</div>
+		</div>
+	</div><!--panel-top-->
+	
+	<div id="panel-middle">
+		<div class="panel-content">
+			<div id="subnav">
+				<ul>
+					<li><span id="flush" title="Show friends who are not following you back">Flush</span></li>
+					<li><span id="followback" title="Show followers you are not following">Followback</span></li>
+					<li><span id="zombielist" title="Show people you follow who are inactive">Zombies</span></li>
+					<li><span id="safelist" title="Show friends you never want to unfollow">SafeList</span></li>
+					<li><span id="ignorelist" title="Show people you never want to follow">IgnoreList</span></li>
+					
+					<li class="right"><input id="search" class="input search_input" type="text"/></li>
+				</ul>
+			</div>
+		</div>
+	</div><!--panel-middle-->
+	
+	<div id="panel-bottom">
+		<div class="panel-content">
+			<div id="headline">
+				<h3>Dashboard</h3>
+			</div>
+			
+			<div class="stats">
+				<span id="listed_count" class="section last"><span class="value">0</span>Listed</span>
+				<span id="followers_count" class="section"><span class="value">0</span>Followers</span>
+				<span id="friends_count" class="section first"><span class="value">0</span>Following</span>	
+			</div>
+		</div>
+	</div><!--panel-bottom-->
+</div><!--header-->
+
+<div id="container">
+
+<div id="columns" class="clearfix">
+	<div id="col-left">
+		<ul class="sort clearfix">
+			<li><div class="button sort-by-followers"><span>Sort by Followers</span></div></li>
+			<li><div class="button sort-by-name"><span>Sort by Name</span></div></li>
+			<li><div class="button sort-by-username"><span>Sort by Username</span></div></li>
+			<li><div class="button sort-by-location"><span>Sort by Location</span></div></li>
+		</ul>
+		
+		<div id="spinner" class="clearfix"></div>
+		
+		<ul class="users">
+		</ul><!--users-->
+	
+		<script id="UserTmpl" type="text/template">
+			<li class="user" data-id="<%= id %>" data-screen-name="<%= screen_name %>" data-name="<%= name %>" data-description="<%= description %>" data-profile-image-url="<%= profile_image_url %>" data-statuses-count="<%= statuses_count %>" data-friends-count="<%= friends_count %>" data-followers-count="<%= followers_count %>" data-listed-count="<%= listed_count %>" data-location="<%= location %>" data-url="<%= url %>" data-status-text="<%= status.text %>" data-status-created-at="<%= status.created_at %>">
+				<div class="section name">
+					<h3><%= name %></h3>
+				</div>
+				
+				<div class="section bio">
+					<blockquote><%= description %></blockquote>
+				</div>
+
+				<div class="section username">
+					<h4><a href="http://twitter.com/<%= screen_name %>" target="_blank">@<%= screen_name %></a></h4>
+				</div>
+
+				<div class="section statistics">
+					<img src="<%= profile_image_url %>" class="profile_image" alt="<%= name %>" width="32" height="32"/>
+					<a href="http://twitter.com/<%= screen_name %>" class="tweets" target="_blank">Tweets: <%= statuses_count %></a>
+					<a href="http://twitter.com/<%= screen_name %>/following" class="following" target="_blank">Following: <%= friends_count %></a>
+					<a href="http://twitter.com/<%= screen_name %>/followers" class="followers" target="_blank">Followers: <%= followers_count %></a>
+					<a href="https://twitter.com/<%= screen_name %>/lists/memberships" class="listed" target="_blank">Listed: <%= listed_count %></a>
+					<a href="http://maps.google.com/maps?q=<%= location %>" class="location" target="_blank"><%= location %></a>
+					<a href="<%= url %>" class="url" target="_blank"><%= url %></a>
+				</div>
+			</li>
+		</script>
+	</div><!--col-left-->
+	
+	<div id="col-right">
+		<div id="control-panel" class="box pleft">
+			<div class="box data">
+				<p><input id="filter" class="input filter" type="text"/></p>
+
+				<ul class="actions">
+					<li id="select_all" class="clearfix"><span class="left">Select All</span></li>
+					<li id="remove_selected" class="clearfix"><span class="left">Remove Selected</span></li>
+		
+					<li id="add_safelist" class="clearfix"><span class="left">Add to Safelist</span></li>
+					<li id="add_ignorelist" class="clearfix"><span class="left">Add to IgnoreList</span></li>
+					<li id="follow_selected" class="clearfix"><span class="left">Follow Selected</span></li>
+					<li id="unfollow_selected" class="clearfix"><span class="left">Unfollow Selected</span></li>
+					<li id="remove_unfollowed" class="clearfix"><span class="left">Remove Unfollowed</span></li>
+					<li id="remove_websiteless" class="clearfix"><span class="left">Remove Websiteless</span></li>
+					<li id="remove_bioless" class="clearfix"><span class="left">Remove Bioless</span></li>
+				</ul>
+			</div>
+		</div><!--rightc-->
+	</div><!--col-right-->
+</div><!--columns-->
+
+</div><!--container-->
+
+<div id="footer">
+	<ul>
+		<li id="tokens">API TOKENS /ENDPOINT/ 0 OF 0 (EVERY 15 MINUTES)</li>
+		
+		<li class="divider"></li>
+		
+		<li id="follows">FOLLOWS: 0 OF 0/DAY</li>
+		
+		<li class="divider"></li>
+		
+		<li id="unfollows">UNFOLLOWS: 0 OF 0/DAY</li>
+		
+		<li class="divider"></li>
+		
+		<li id="todo" class="right">TODO: 0:0</li>
+		
+		<li class="right divider"></li>
+		
+		<li id="selected" class="right">USERS SELECTED: 0 OF 0</li>
+		
+		<li class="right divider"></li>
+	</ul>
+</div><!--footer-->
+
+<!--<script type="text/javascript" src="javascripts/galileo_unpack.js"></script>-->
+<!--<script type="text/javascript" src="javascripts/galileo.js"></script>-->
+
+<!--Libraries-->
+<script src="javascripts/libraries/json2.js"></script>
+<script src="javascripts/libraries/jquery.js"></script>
+<script src="javascripts/libraries/underscore.js"></script>
+<script src="javascripts/libraries/backbone.js"></script>
+<script src="javascripts/libraries/spin.js"></script>
+<script src="javascripts/libraries/store.js"></script>
+<script src="javascripts/libraries/oauth.js"></script>
+<script src="javascripts/libraries/twitter_text.js"></script>
+<script src="javascripts/libraries/jnotify.js"></script>
+
+<!--Models-->
+<script type="text/javascript" src="javascripts/models/user.js"></script>
+<script type="text/javascript" src="javascripts/models/tweet.js"></script>
+
+<!--Collections-->
+<script type="text/javascript" src="javascripts/collections/users.js"></script>
+<script type="text/javascript" src="javascripts/collections/tweets.js"></script>
+
+<!--Views-->
+<script type="text/javascript" src="javascripts/views/user_view.js"></script>
+<script type="text/javascript" src="javascripts/views/app_view.js"></script>
+
+</body></html>

@@ -1,0 +1,20 @@
+{
+	"name": "Galileo",
+	"description": "A smarter way to manage Twitter relationships and build an audience.",
+	"version": "1.1.1",
+	"manifest_version": 2,
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"app": {
+		"launch": {
+			"local_path": "signin.html"
+		}
+	},
+	"icons": {
+		"16": "galileo_favicon.png",
+		"128": "galileo_logo.png"
+	},
+	"web_accessible_resources": [
+	    "signin.html"
+	  ],
+	"permissions": [ "http://api.twitter.com/*", "https://api.twitter.com/*", "https://api.twitter.com/oauth/request_token", "https://api.twitter.com/oauth/access_token", "https://twitter.com/oauth/authorize", "https://twitter.com/oauth/authenticate", "https://search.twitter.com/*", "http://*.twimg.com/", "https://*.twimg.com/", "unlimitedStorage", "tabs"]
+}

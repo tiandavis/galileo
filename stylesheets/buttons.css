@@ -1,0 +1,57 @@
+/*-------------------------------------------------
+LOCALIZABLE (NON-IMAGE) BUTTONS
+
+Option #1 - Single-Page App, hyperlinks not as important
+<div class="button sort-by-followers"><span>Sort by Followers</span></div>
+
+Option #2 - Where hyperlinks are necessary
+<div class="button sort-by-name"><a href="#"><span>Sort by Name</span></a></div>
+-------------------------------------------------*/
+
+div.button {
+	overflow: hidden;
+	margin-left: -1px;
+	margin-top: -1px;
+	padding: 1px;
+	cursor: pointer;
+}
+
+div.button a,
+div.button a:hover,
+div.button span,
+div.button span:hover {
+	display: block;
+  	float: left;
+  	font-family: 'Lucida Grande', 'Lucida Sans', 'Lucida Sans Unicode', 'Verdana', sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	margin-right: 0.4em;
+	text-decoration: none;
+	text-shadow: 0 0 1px #ffffff;
+	text-wrap: none;
+
+	border-radius: 1.3em 1.3em 1.3em 1.3em;
+	-moz-border-radius: 1.3em 1.3em 1.3em 1.3em;
+	-webkit-border-radius: 1.3em 1.3em 1.3em 1.3em;
+	background: -moz-linear-gradient(center top , #fbfbfb, #EBEBEB) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#EBEBEB)); 
+	border: 2px solid #bbbbbb;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+	padding: 4px 16px;
+}
+
+div.button a:active,
+div.button span:active {
+	background: -moz-linear-gradient(center top , #EBEBEB, #fbfbfb) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, left top, left bottom, from(#EBEBEB), to(#fbfbfb)); 
+}
+
+div.button a span,
+div.button span {
+	color: #000000;
+  	display: block;
+}
+
+div.button span.disabled {
+	color: #545454;
+}
