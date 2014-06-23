@@ -18,7 +18,7 @@ Galileo organizes a number of open source projects:
 
 Front End:
 * HTML5
-* CSS3 - CSS3 preprocessor with superpowers
+* CSS3
 * [jQuery] - duh
 * jNotify - sleak notifications to users
 * [Underscore] - functional JavaScript utility library
