@@ -28,7 +28,7 @@ Front End:
 * [Sinon] - test spies, stubs and mocks for JavaScript
 
 Back End:
-* [Twitter API] - a dynamic, elegant open source programming language
+* [Twitter API] - Twitter's official API.
 
 	
 
