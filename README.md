@@ -14,7 +14,7 @@ Galileo demonstrates integrating with a third-party API. Here, we integrate with
 Application Stack
 -----------
 
-Enigma organizes a number of open source projects:
+Galileo organizes a number of open source projects:
 
 Front End:
 * HTML5
