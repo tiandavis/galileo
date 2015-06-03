@@ -19,6 +19,7 @@ gulp.task('css', function() {
 });
 
 // concat js
+// shared libraries
 var scripts = [
 	'./bower_components/json2/json2.js',
 	'./bower_components/jquery/jquery.js',
