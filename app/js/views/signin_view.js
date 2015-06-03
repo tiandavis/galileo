@@ -72,8 +72,7 @@ var SigninView = Backbone.View.extend({
 		if(consumer_key === "" || consumer_secret === "") {
 			$.jnotify("Consumer Key & Consumer Secret - <a href=\"http://techoctave.com/galileo/faq\" target=\"_blank\">Takes 5 minutes!</a>", "warning", 5000);
 			return false;
-		}
-		else {
+		} else {
 			//Persist app Credentials to localStorage
 			var credential = {
 				"id": "0",

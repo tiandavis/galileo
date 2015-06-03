@@ -441,8 +441,8 @@ exports.OAuth = (function (global) {
                 }
 
                 xhr.open(method, url+'', true);
-//console.log((toHeaderString(headerParams)).toString().replace(/%3A/g, ":").replace(/%2F/g, "/"))
-                xhr.setRequestHeader('Authorization', 'OAuth ' + toHeaderString(headerParams).toString().replace(/%3A/g, ":").replace(/%2F/g, "/"));
+
+                xhr.setRequestHeader('Authorization', 'OAuth ' + toHeaderString(headerParams));
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (i in headers) {
                     xhr.setRequestHeader(i, headers[i]);
