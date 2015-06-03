@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-	"postinstall": "bower install && gulp concat"
+    "postinstall": "bower install && gulp concat"
   },
   "author": "TechOctave, LLC",
   "license": "MIT",
@@ -25,5 +25,7 @@
     "gulp-open": "^0.3.1",
     "gulp-uglify": "^1.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-zip": "^3.0.2"
+  }
 }

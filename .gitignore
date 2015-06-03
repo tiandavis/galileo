@@ -4,4 +4,5 @@ node_modules
 app/css/galileo.css
 app/js/galileo.js
 app/js/signin.js
+dist
 

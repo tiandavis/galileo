@@ -4,6 +4,7 @@ var jasmine = require('gulp-jasmine');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
+var zip = require("gulp-zip");
 
 // concat css
 gulp.task('css', function() {
@@ -62,6 +63,38 @@ gulp.task('scripts-galileo', function() {
 		.pipe(gulp.dest('./app/js/'));
 });
 
+// create distribution
+gulp.task('zip', function() {
+	return gulp.src([
+		'./**',
+		'!./css/application.css',
+		'!./css/buttons.css',
+		'!./css/jnotify.css',
+		'!./css/reset.css',
+		
+		'!./js/collections/',
+		'!./js/collections/**',
+		
+		'!./js/controllers/',
+		'!./js/controllers/**',
+		
+		'!./js/libraries/',
+		'!./js/libraries/**',
+		
+		'!./js/models/',
+		'!./js/models/**',
+		
+		'!./js/vendors/',
+		'!./js/vendors/**',
+		
+		'!./js/views/',
+		'!./js/views/**'
+	], {cwd: __dirname + "/app"})
+	.pipe(zip('Galileo.zip'))
+	.pipe(gulp.dest('dist'));
+});
+
+
 // watch for code changes
 gulp.task('watch', function() {
 	gulp.watch(['./app/css/*.css', '!./app/css/galileo.css', 
@@ -76,3 +109,5 @@ gulp.task('default', ['concat', 'watch']);
 gulp.task('scripts', ['scripts-signin', 'scripts-galileo']);
 
 gulp.task('concat', ['css', 'scripts']);
+
+gulp.task('dist', ['zip']);
