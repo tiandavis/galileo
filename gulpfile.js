@@ -12,7 +12,7 @@ gulp.task('css', function() {
 		'./app/css/buttons.css',
 		'./app/css/jnotify.css',
 		'./app/css/application.css'
-    ])
+	])
 	.pipe(concat('galileo.css'))
 	.pipe(minifyCSS())
 	.pipe(gulp.dest('./app/css/'));
@@ -24,7 +24,7 @@ var scripts = [
 	'./bower_components/jquery/jquery.js',
 	'./bower_components/underscore/underscore.js',
 	'./bower_components/backbone/backbone.js',
-	
+
 	'./bower_components/spin.js/spin.js',
 	'./app/js/libraries/store.js',
 	'./app/js/vendors/oauth.js',
@@ -34,11 +34,11 @@ var scripts = [
 
 gulp.task('scripts-signin', function() {
 	var source = scripts.slice();
-	
+
 	source.push.apply(source, [
 		'./app/js/views/signin_view.js'
-    ]);
-	
+	]);
+
 	return gulp.src(source)
 		.pipe(concat('signin.js'))
 		.pipe(uglify())
@@ -47,14 +47,14 @@ gulp.task('scripts-signin', function() {
 
 gulp.task('scripts-galileo', function() {
 	var source = scripts.slice();
-	
+
 	source.push.apply(source, [
 		'./app/js/models/*.js',
 		'./app/js/collections/*.js',
 		'./app/js/views/user_view.js',
 		'./app/js/views/app_view.js'
-    ]);
-	
+	]);
+
 	return gulp.src(source)
 		.pipe(concat('galileo.js'))
 		.pipe(uglify())
@@ -63,7 +63,7 @@ gulp.task('scripts-galileo', function() {
 
 // watch for code changes
 gulp.task('watch', function() {
-    gulp.watch(['./app/css/*.css', '!./app/css/galileo.css', 
+	gulp.watch(['./app/css/*.css', '!./app/css/galileo.css', 
 				'./app/js/**/*.js', '!./app/js/**/signin.js', '!./app/js/**/galileo.js',
 				'./app/*.html'], ['css', 'scripts']);
 });
