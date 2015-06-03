@@ -169,7 +169,7 @@ var UserView = Backbone.View.extend({
 	search: function(options) {
 		options || (options = {});
 		
-		this.el.empty(); //Reset the View
+		this.$el.empty(); //Reset the View
 		window.TweetList.reset();
 		window.UserList.reset();
 		
@@ -267,7 +267,7 @@ var UserView = Backbone.View.extend({
 					//Autolink: Usernames, Urls and Hashtags
 					//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
 					
-					$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+					$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 					
 					//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 					var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
@@ -316,7 +316,7 @@ var UserView = Backbone.View.extend({
 			window.FilteredUsers.reset(results);
 
 			window.FilteredUsers.each(function(user) {
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON()));
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON()));
 				
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
 				bio.html(window.twttr.txt.autoLink(bio.text()));
@@ -342,7 +342,7 @@ var UserView = Backbone.View.extend({
 			window.UserList.reset(results);
 
 			window.UserList.each(function(user) {
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON()));
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON()));
 				
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
 				bio.html(window.twttr.txt.autoLink(bio.text()));
@@ -376,7 +376,7 @@ var UserView = Backbone.View.extend({
 		if(term === "") {
 			$(".users").empty();
 			window.UserList.each(function(user) {
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON()));
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON()));
 				
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
 				bio.html(window.twttr.txt.autoLink(bio.text()));
@@ -413,7 +413,7 @@ var UserView = Backbone.View.extend({
 		$(".users").empty();
 		
 		window.FilteredUsers.each(function(user) {
-			$(".users").append(_.template($("#UserTmpl").html(), user.toJSON()));
+			$(".users").append(_.template($("#UserTmpl").html())(user.toJSON()));
 			
 			var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
 			bio.html(window.twttr.txt.autoLink(bio.text()));
@@ -526,7 +526,7 @@ var UserView = Backbone.View.extend({
 	},
 	
 	remove_websiteless: function() {
-		$(".user .statistics a.url[href=]").parents(".user").each(function(index) {
+		$(".user .statistics a.url[href='']").parents(".user").each(function(index) {
 			//Remove from DOM
 			$(this).remove();
 			
@@ -707,7 +707,7 @@ var UserView = Backbone.View.extend({
 		
 		//Get list of bastard ids
 		if(typeof options.bastards === "undefined" || options.bastards === null) { //Initialization
-			this.el.empty(); //Reset the View
+			this.$el.empty(); //Reset the View
 			window.UserList.reset();
 			
 			options.bastards = [];
@@ -800,7 +800,7 @@ var UserView = Backbone.View.extend({
 				//Autolink: Usernames, Urls and Hashtags
 				//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
 				
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 				
 				//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
@@ -838,7 +838,7 @@ var UserView = Backbone.View.extend({
 		
 		//Get list of friend ids
 		if(typeof options.saints === "undefined" || options.saints === null) { //Initialization
-			this.el.empty(); //Reset the View
+			this.$el.empty(); //Reset the View
 			window.UserList.reset();
 			
 			options.saints = [];
@@ -929,7 +929,7 @@ var UserView = Backbone.View.extend({
 				//Autolink: Usernames, Urls and Hashtags
 				//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
 				
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 				
 				//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
@@ -967,7 +967,7 @@ var UserView = Backbone.View.extend({
 		
 		//Get list of friend ids
 		if(typeof options.zombies === "undefined" || options.zombies === null) { //Initialization
-			this.el.empty(); //Reset the View (On Initialization)
+			this.$el.empty(); //Reset the View (On Initialization)
 			window.UserList.reset();
 			
 			options.zombies = [];
@@ -1042,7 +1042,7 @@ var UserView = Backbone.View.extend({
 				if(days > options.days) { //Display the User
 					//Autolink: Usernames, Urls and Hashtags
 					//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
-					$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+					$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 
 					//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 					var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
@@ -1081,7 +1081,7 @@ var UserView = Backbone.View.extend({
 		
 		//Get list of friend ids
 		if(typeof options.users === "undefined" || options.users === null) { //Initialization
-			this.el.empty(); //Reset the View
+			this.$el.empty(); //Reset the View
 			window.UserList.reset();
 			
 			options.users = [];
@@ -1153,7 +1153,7 @@ var UserView = Backbone.View.extend({
 				//Autolink: Usernames, Urls and Hashtags
 				//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
 				
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 				
 				//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
@@ -1195,7 +1195,7 @@ var UserView = Backbone.View.extend({
 		
 		//Get list of friend ids
 		if(typeof options.users === "undefined" || options.users === null) { //Initialization
-			this.el.empty(); //Reset the View
+			this.$el.empty(); //Reset the View
 			window.UserList.reset();
 			
 			options.users = [];
@@ -1267,7 +1267,7 @@ var UserView = Backbone.View.extend({
 				//Autolink: Usernames, Urls and Hashtags
 				//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
 				
-				$(".users").append(_.template($("#UserTmpl").html(), user.toJSON())); //Add the User to the View
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
 				
 				//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
 				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");

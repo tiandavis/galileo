@@ -22,7 +22,7 @@ gulp.task('css', function() {
 // shared libraries
 var scripts = [
 	'./bower_components/json2/json2.js',
-	'./bower_components/jquery/jquery.js',
+	'./bower_components/jquery/dist/jquery.js',
 	'./bower_components/underscore/underscore.js',
 	'./bower_components/backbone/backbone.js',
 

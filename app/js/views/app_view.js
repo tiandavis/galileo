@@ -24,7 +24,7 @@ var AppView = Backbone.View.extend({
 		var user_credentials = store.query("credentials", "type", "user");
 		
 		if(typeof user_credentials !== "undefined" && user_credentials !== null) {
-			$("#session").html(_.template($("#AuthTmpl").html(), {id: user_credentials.id, screen_name: user_credentials.screen_name}));
+			$("#session").html(_.template($("#AuthTmpl").html())({id: user_credentials.id, screen_name: user_credentials.screen_name}));
 		} else {
 			//Unauthorized User - Force Signin
 			window.location = this.path + "signin.html";
