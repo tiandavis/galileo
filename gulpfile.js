@@ -110,4 +110,4 @@ gulp.task('scripts', ['scripts-signin', 'scripts-galileo']);
 
 gulp.task('concat', ['css', 'scripts']);
 
-gulp.task('dist', ['zip']);
+gulp.task('dist', ['concat', 'zip']);

@@ -33,7 +33,7 @@ window.startService = function() {
 		//Follow or Unfollow the User based on action attribute
 		if(todo.action === "follow" && window.appView.follows() < window.appView.MAX_FOLLOWS) {
 			//Follow
-			oauth.post("https://api.twitter.com/1.1/friendships/create.json", {user_id: todo.id}, function (data) {			
+			oauth.post("https://api.twitter.com/1.1/friendships/create.json", {user_id: todo.id}, function (data) {
 				//Remove User from Todo table
 				store.destroy("todos", todo);
 				
@@ -54,6 +54,29 @@ window.startService = function() {
 				
 				//Update Follows Limit
 				window.appView.follows();
+				
+				//Update queue text
+				$("#todo").text("TODO: " + store.findAll("todos").length + ":" + pollInterval);
+		    }, function(error) {
+				var errors = JSON.parse(error.text).errors;
+				
+				_.each(errors, function(error) {
+					//You have been blocked from following this account at the request of the user.
+					if(error.code === 162) {
+						//Remove User from Todo table
+						store.destroy("todos", todo);
+				
+						//Add the user to the Haters Table
+						var hater = {
+							"id": todo.id.toString()
+						};
+			
+						store.create("haters", hater);
+						
+						//Remove User from Friends table
+						store.destroy("friends", hater);
+					}
+				});
 				
 				//Update queue text
 				$("#todo").text("TODO: " + store.findAll("todos").length + ":" + pollInterval);
@@ -467,9 +490,7 @@ var UserView = Backbone.View.extend({
 	remove_selected: function() {
 		$(".selected").each(function(index) {
 			//Remove from safelist or ignorelist if selected
-			if($(this).is(".safelist") === true) {
-				//console.log("safelist");
-				
+			if($(this).is(".safelist") === true) {				
 				var user = {
 					"id": $(this).data("id").toString()
 				};
@@ -478,13 +499,19 @@ var UserView = Backbone.View.extend({
 			}
 			
 			if($(this).is(".ignorelist") === true) {
-				//console.log("ignorelist");
-				
 				var user = {
 					"id": $(this).data("id").toString()
 				};
 				
 				store.destroy("ignorelist", user);
+			}
+			
+			if($(this).is(".haters") === true) {
+				var user = {
+					"id": $(this).data("id").toString()
+				};
+				
+				store.destroy("haters", user);
 			}
 			
 			//Remove from DOM
@@ -599,8 +626,10 @@ var UserView = Backbone.View.extend({
 			//Don't add to Follow Queue:
 			//1. Already following
 			//2. In Ignore List
+			//3. Haters
 			var friends = store.findAll("friends");
 			var ignorelist = store.findAll("ignorelist");
+			var haters = store.findAll("haters");
 			var user_credentials = store.query("credentials", "type", "user");
 
 			$(".selected").each(function(index) {
@@ -611,16 +640,17 @@ var UserView = Backbone.View.extend({
 					return friend.id === id;
 				});
 				
-				//console.log("Already following: " + foundFriend);
-				
 				//Query Ignore list for an instance of the User
 				var foundIgnore = _.any(ignorelist, function(ignore) {
 					return ignore.id === id;
 				});
 				
-				//console.log("Ignoring User: " + foundIgnore);
+				//Query Haters list for an instance of the User
+				var foundHater = _.any(haters, function(hater) {
+					return hater.id === id;
+				});
 				
-				if(foundFriend === false && foundIgnore === false && user_credentials.id !== id) {					
+				if(foundFriend === false && foundIgnore === false && foundHater === false && user_credentials.id !== id) {					
 					var todo = {
 						"id": $(this).data("id"),
 						"screen_name": $(this).data("screen-name"),
@@ -1276,6 +1306,120 @@ var UserView = Backbone.View.extend({
 				//Add ignorelist class to User
 				var ignorelist = $("li[data-id="+ user.get("id") +"]");
 				ignorelist.addClass("ignorelist");
+				
+				//Highlight Unfollowed Users
+				var unfollowlist = store.findAll("unfollowed");
+
+				var isUnfollowed = _.any(unfollowlist, function(unfollowed) {
+					return unfollowed.id === user.get("id");
+				});
+
+				if(isUnfollowed === true) {
+					var unfollowed = $("li[data-id="+ user.get("id") +"]");
+					unfollowed.addClass("unfollowed");
+				}
+			});//window.UserList.each
+			
+			//Update API Tokens
+			window.appView.rate_limit_status("users", "lookup");
+			
+			//Update Users Selected
+			window.appView.users_selected();
+			
+			//Keep calling the Ignore List until all Users are displayed
+			window.userView.ignorelist({"users": options.users});
+			
+		});//Get UserList
+			
+		return this;
+	},
+	
+	haters: function(options) {
+		options || (options = {});
+		
+		//Get list of friend ids
+		if(typeof options.users === "undefined" || options.users === null) { //Initialization
+			this.$el.empty(); //Reset the View
+			window.UserList.reset();
+			
+			options.users = [];
+
+			var haters = store.findAll("haters");
+
+			if(haters.length === 0) {
+				return this;
+			}
+
+			_.each(haters, function(user){
+				options.users.push(user.id);
+			});
+		} else {
+			if(options.users.length === 0) { //We're done here
+				//True UserList is Users on the DOM
+				window.userView.refresh_user_list();
+				
+				return this;
+			}
+		}
+		
+		//Get the authenticated User
+		var app_credentials = store.query("credentials", "type", "app");
+		var user_credentials = store.query("credentials", "type", "user");
+		
+		var oauth = OAuth({
+	        consumerKey: app_credentials.consumer_key,
+	        consumerSecret: app_credentials.consumer_secret,
+			accessTokenKey: user_credentials.oauth_token,
+            accessTokenSecret: user_credentials.oauth_token_secret
+	    });
+	
+		if(options.users.length > 100) {
+			window.UserList.url = "https://api.twitter.com/1.1/users/lookup.json?user_id=" + options.users.splice(0,100);
+		} else {
+			window.UserList.url = "https://api.twitter.com/1.1/users/lookup.json?user_id=" + options.users;
+			options.users.splice(0, options.users.length);
+		}
+		
+		oauth.get(window.UserList.url, function (data) {
+			//Reset the list of Users				
+			window.UserList.reset(JSON.parse(data.text));
+			
+			window.UserList.each(function(user) {
+				//Make sure the important nodes are always available
+				//undefined = the value of missing properties
+				//null = the property exists, but the value is not known 
+				if (typeof user.get("name") === "undefined" || user.get("name") === null) {
+					user.set({name: ""});
+				}
+
+				if (typeof user.get("screen_name") === "undefined" || user.get("screen_name") === null) {
+					user.set({screen_name: ""});
+				}
+
+				if (typeof user.get("location") === "undefined" || user.get("location") === null) {
+					user.set({location: ""});
+				}
+
+				if (typeof user.get("status") === "undefined" || user.get("status") === null) {
+					user.set({status: {text: ""}});
+				}
+
+				if (typeof user.get("description") === "undefined" || user.get("description") === null) {
+					user.set({description: ""});
+				}
+				
+				//Autolink: Usernames, Urls and Hashtags
+				//user.set({description: window.twttr.txt.autoLink(user.get("description"))});
+				
+				$(".users").append(_.template($("#UserTmpl").html())(user.toJSON())); //Add the User to the View
+				
+				//Add Twttr.txt to the DOM not to the Data (WORKING CODE)
+				var bio = $("li[data-id="+ user.get("id") +"] .bio blockquote");
+				bio.html(window.twttr.txt.autoLink(bio.text()));
+				
+				//Add haters class to User
+				var haters = $("li[data-id="+ user.get("id") +"]");
+				haters.addClass("haters");
 				
 				//Highlight Unfollowed Users
 				var unfollowlist = store.findAll("unfollowed");

@@ -58,7 +58,8 @@ var AppView = Backbone.View.extend({
 		"click #followback"				: "followback",
 		"click #zombielist"				: "zombielist",
 		"click #safelist"				: "safelist",
-		"click #ignorelist"				: "ignorelist"
+		"click #ignorelist"				: "ignorelist",
+		"click #haters"					: "haters"
     },
 
  	search_on_enter: function(e) {
@@ -255,6 +256,10 @@ var AppView = Backbone.View.extend({
 	
 	ignorelist: function() {
 		window.userView.ignorelist();
+	},
+	
+	haters: function() {
+		window.userView.haters();
 	}
 });
 
