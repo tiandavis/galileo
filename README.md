@@ -36,7 +36,7 @@ Back End:
 [jQuery]:http://jquery.com
 [Underscore]:http://underscorejs.org/
 [Backbone]:http://backbonejs.org/
-[Jasmine]:http://pivotal.github.io/jasmine/
+[Jasmine]:https://jasmine.github.io/
 [Sinon]:http://sinonjs.org/
 [StoreJS]:https://github.com/marcuswestin/store.js/
 [Twitter API]: https://dev.twitter.com/docs/api/1.1
