@@ -71,25 +71,27 @@ gulp.task('zip', function() {
 		'!./css/buttons.css',
 		'!./css/jnotify.css',
 		'!./css/reset.css',
-		
+
+		'./js/galileo.js',
+		'./js/signin.js',
 		'!./js/collections/',
 		'!./js/collections/**',
-		
+
 		'!./js/controllers/',
 		'!./js/controllers/**',
-		
+
 		'!./js/libraries/',
 		'!./js/libraries/**',
-		
+
 		'!./js/models/',
 		'!./js/models/**',
-		
+
 		'!./js/vendors/',
 		'!./js/vendors/**',
-		
+
 		'!./js/views/',
 		'!./js/views/**'
-	], {cwd: __dirname + "/app"})
+	], {cwd: __dirname + '/app'})
 	.pipe(zip('Galileo.zip'))
 	.pipe(gulp.dest('dist'));
 });
@@ -97,7 +99,7 @@ gulp.task('zip', function() {
 
 // watch for code changes
 gulp.task('watch', function() {
-	gulp.watch(['./app/css/*.css', '!./app/css/galileo.css', 
+	gulp.watch(['./app/css/*.css', '!./app/css/galileo.css',
 				'./app/js/**/*.js', '!./app/js/**/signin.js', '!./app/js/**/galileo.js',
 				'./app/*.html'], ['css', 'scripts']);
 });
