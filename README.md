@@ -1,4 +1,4 @@
- _______  _______  _       _________ _        _______  _______ 
+ _______  _______  _       _________ _        _______  _______
 (  ____ \(  ___  )( \      \__   __/( \      (  ____ \(  ___  )
 | (    \/| (   ) || (         ) (   | (      | (    \/| (   ) |
 | |      | (___) || |         | |   | |      | (__    | |   | |
@@ -6,7 +6,7 @@
 | | \_  )| (   ) || |         | |   | |      | (      | |   | |
 | (___) || )   ( || (____/\___) (___| (____/\| (____/\| (___) |
 (_______)|/     \|(_______/\_______/(_______/(_______/(_______)
-                      
+
 
 
 Galileo demonstrates integrating with a third-party API. Here, we integrate with Twitter's API.
@@ -30,7 +30,11 @@ Front End:
 Back End:
 * [Twitter API] - Twitter's official API.
 
-	
+Run:
+`gulp`
+
+Distribute:
+`gulp dist`
 
 
 [jQuery]:http://jquery.com
@@ -40,5 +44,3 @@ Back End:
 [Sinon]:http://sinonjs.org/
 [StoreJS]:https://github.com/marcuswestin/store.js/
 [Twitter API]: https://dev.twitter.com/docs/api/1.1
-
-
